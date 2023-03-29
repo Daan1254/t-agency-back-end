@@ -1,6 +1,7 @@
-import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { Session } from "./session.entity";
+import { Comment } from './comment.entity'
 
 @Entity()
 export class User {
@@ -21,6 +22,9 @@ export class User {
 
   @ManyToOne(() => Session, (session) => session.user)
   sessions: Session[];
+
+  @ManyToOne(() => Comment, (comment) => comment.user)
+  comments: Comment[];
 
   @BeforeInsert()
   async hashPassword() {
