@@ -1,13 +1,16 @@
 import { IsNotEmpty } from "class-validator";
 
-export class CreateActivityDto {
+export class CreateEditActivityDto {
   @IsNotEmpty()
-  name: string;
+  title: string;
 
   @IsNotEmpty()
   description: string;
 
   @IsNotEmpty()
   bannerImageUrl: string;
+
+  @IsNotEmpty()
+  date: string
 
 }

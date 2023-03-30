@@ -1,8 +1,11 @@
-import { BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { Session } from "./session.entity";
 import { Comment } from './comment.entity'
 import { Request } from "./request.entity";
+import { Activity } from "./activity.entity";
+import { Vote } from "./vote.entity";
+import { Poll } from "./poll.entity";
 
 @Entity()
 export class User {
@@ -29,6 +32,15 @@ export class User {
 
   @ManyToOne(() => Request, (request) => request.user)
   requests: Request[]
+
+  @ManyToOne(() => Activity, (activity) => activity.user)
+  activities: Activity[]
+
+  @ManyToOne(() => Poll, (poll) => poll.user)
+  polls: Poll[]
+
+  @ManyToOne(() => Vote, (vote) => vote.user)
+  votes: Vote[]
 
   @BeforeInsert()
   async hashPassword() {

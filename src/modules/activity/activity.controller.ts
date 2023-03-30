@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Delete, Put, Req } from "@nestjs/common/decorators";
+import { AuthGuard, RequestWithAuth } from "../auth/auth.guard";
 import { ActivityService } from "./activity.service";
-import { CreateActivityDto } from "./dto/create-activity.dto";
+import { CreateEditActivityDto } from "./dto/create-edit-activity.dto";
 
 @Controller('activity')
 export class ActivityController {
@@ -10,13 +12,26 @@ export class ActivityController {
 
   @Post('/')
   @UsePipes(ValidationPipe)
-  async createActivity(@Body() body: CreateActivityDto) {
-    return await this.activityService.createActivity(body);
+  @UseGuards(AuthGuard)
+  async createActivity(@Body() body: CreateEditActivityDto, @Req() req: RequestWithAuth) {
+    return await this.activityService.createActivity(body, req.user);
   }
 
   @Get('/')
   async getActivities() {
     return await this.activityService.getActivities();
+  }
+
+  @Put(':uuid')
+  @UseGuards(AuthGuard)
+  async updateActivity(@Param('uuid') uuid: string, @Body() body: CreateEditActivityDto) {
+    return await this.activityService.updateActivity(uuid, body)
+  }
+
+  @Delete(':uuid')
+  @UseGuards(AuthGuard)
+  async deleteActivity(@Param('uuid') uuid: string) {
+    return await this.activityService.deleteActivity(uuid)
   }
 
   @Get('/:uuid')

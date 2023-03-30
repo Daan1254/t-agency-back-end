@@ -15,7 +15,6 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<any> {
     const request = context.switchToHttp().getRequest();
-    console.log(request.headers['authorization'])
     const user = await this.authService.validate(request.headers['authorization'])
     delete user.password
     request.user = user

@@ -1,23 +1,66 @@
 import { Injectable } from "@nestjs/common";
-import { CreateActivityDto } from "./dto/create-activity.dto";
+import { CreateEditActivityDto } from "./dto/create-edit-activity.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Activity } from "../../typeorm";
+import { UserDto } from "../auth/dto/user.dto";
+import { BadRequestException } from "@nestjs/common/exceptions";
 
 @Injectable()
 export class ActivityService {
+
+ 
   constructor(@InjectRepository(Activity) private readonly activityRepository: Repository<Activity>) {
   }
 
-  async createActivity(body: CreateActivityDto) {
-    const activity = this.activityRepository.create(body);
+  async createActivity(body: CreateEditActivityDto, user: UserDto) {
+    const activity = this.activityRepository.create({
+      ...body,
+      user
+    });
 
     return await this.activityRepository.save(activity);
   }
 
+  async deleteActivity(uuid: string) {
+    const activity = await this.activityRepository.findOne({
+      where: {
+        uuid
+      }
+    }) 
+
+
+    if (!activity) {
+      throw new BadRequestException("Activity does not exists")
+    }
+
+
+    return await this.activityRepository.remove(activity);
+  }
+
+  async updateActivity(uuid: string, body: CreateEditActivityDto) {
+    const activity = await this.activityRepository.findOne({
+      where: {
+        uuid
+      }
+    }) 
+
+
+    if (!activity) {
+      throw new BadRequestException("Activity does not exists")
+    }
+
+    return await this.activityRepository.save({
+      ...activity,
+      ...body
+    })
+  }
+
 
   async getActivities() {
-    return await this.activityRepository.find();
+    return await this.activityRepository.find({
+      relations: ['user']
+    });
   }
 
   async getActivity(uuid: string) {
@@ -25,7 +68,7 @@ export class ActivityService {
       where: {
         uuid
       },
-      relations: ['comments']
+      relations: ['comments', 'user']
     })
   }
 }

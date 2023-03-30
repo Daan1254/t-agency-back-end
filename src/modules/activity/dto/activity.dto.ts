@@ -4,5 +4,6 @@ export class ActivityDto {
   description: string;
   bannerImageUrl: string;
   createdAt: Date;
+  date: Date
   // comments: Comment[];
 }

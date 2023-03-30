@@ -7,6 +7,7 @@ import entities from "./typeorm";
 import { AuthModule } from "./modules/auth/auth.module";
 import { ActivityModule } from "./modules/activity/activity.module";
 import { RequestModule } from './modules/request/request.module';
+import { VotingModule } from './modules/voting/voting.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { RequestModule } from './modules/request/request.module';
     }),
     AuthModule,
     ActivityModule,
-    RequestModule
+    RequestModule,
+    VotingModule
   ],
   controllers: [AppController],
   providers: [AppService],

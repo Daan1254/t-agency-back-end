@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { AuthGuard, RequestWithAuth } from "../auth/auth.guard";
 import { CreateRequestDto } from "./dto/create-request.dto";
@@ -21,7 +21,7 @@ export class RequestController {
         return await this.requestService.getRequests() 
     }
 
-    @Get('/approve/:uuid') 
+    @Put('/approve/:uuid') 
     @UseGuards(AuthGuard)
     async approveStatus(@Param('uuid') uuid: string) {
         return await this.requestService.approveRequest(uuid)
