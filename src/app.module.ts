@@ -6,6 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import entities from "./typeorm";
 import { AuthModule } from "./modules/auth/auth.module";
 import { ActivityModule } from "./modules/activity/activity.module";
+import { RequestModule } from './modules/request/request.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { ActivityModule } from "./modules/activity/activity.module";
       inject: [ConfigService],
     }),
     AuthModule,
-    ActivityModule
+    ActivityModule,
+    RequestModule
   ],
   controllers: [AppController],
   providers: [AppService],
