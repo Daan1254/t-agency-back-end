@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { ApiTags } from "@nestjs/swagger";
 import { AuthGuard, RequestWithAuth } from "../auth/auth.guard";
 import { CreateRequestDto } from "./dto/create-request.dto";
 import { RequestService } from "./request.service";
-
+@ApiTags('Requests')
 @Controller('request')
 export class RequestController {
     constructor(private readonly requestService: RequestService){}
