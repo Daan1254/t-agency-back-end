@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AuthGuard, RequestWithAuth } from "../auth/auth.guard";
 import { CreateRequestDto } from "./dto/create-request.dto";
 import { RequestService } from "./request.service";
@@ -19,6 +19,19 @@ export class RequestController {
     async getRequest() {
         return await this.requestService.getRequests() 
     }
+
+    @Get('/approve/:uuid') 
+    @UseGuards(AuthGuard)
+    async approveStatus(@Param('uuid') uuid: string) {
+        return await this.requestService.approveRequest(uuid)
+    }
+
+    @Delete(':uuid')
+    @UsePipes(ValidationPipe)
+    @UseGuards(AuthGuard)
+    async removeRequest(@Param('uuid') uuid: string) {
+        return this.requestService.deleteRequest(uuid);
+    }   
     
 
 }
