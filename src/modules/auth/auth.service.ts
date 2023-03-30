@@ -53,7 +53,7 @@ export class AuthService {
 
     await this.sessionRepository.save(session);
 
-    return session.token;
+    return {token: session.token};
   }
 
   async validate(token: string) {
