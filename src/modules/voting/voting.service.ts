@@ -10,6 +10,7 @@ import { VoteDto } from "./dto/vote.dto";
 export class VotingService {
 
 
+
     constructor(
     @InjectRepository(Poll) private readonly pollRepository: Repository<Poll>,
     @InjectRepository(Vote) private readonly voteRepository: Repository<Vote>) {}
@@ -29,6 +30,25 @@ export class VotingService {
 
 
         return await this.pollRepository.save(poll);
+    }
+
+    async deletePoll(uuid: any) {
+        const poll = await this.pollRepository.findOne({
+            where: {
+                uuid
+            },
+            relations: ['votes']
+        })
+
+        if (!poll) {
+            throw new BadRequestException('Poll does not exists')
+        }
+
+        poll.votes.forEach((vote) => {
+            this.voteRepository.remove(vote)
+        })
+
+        return await this.pollRepository.remove(poll);
     }
 
     async vote(body: VoteDto,uuid: string, user: UserDto) {
