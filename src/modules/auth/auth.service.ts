@@ -59,11 +59,12 @@ export class AuthService {
   async validate(token: string) {
     const session = await this.sessionRepository.findOne({where: {token: token}, relations: ['user']});
 
+
+
     if (!session) {
       throw new BadRequestException('Session not found')
     }
-
-    if (session.expiresAt < new Date()) {
+    if (session.expiresAt < new Date(Date.now())) {
       throw new BadRequestException('Session expired')
     }
 
