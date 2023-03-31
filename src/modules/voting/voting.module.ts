@@ -7,7 +7,7 @@ import { VotingService } from "./voting.service";
 
 @Module({
     controllers: [VotingController],
-    exports: [],
+    exports: [VotingService],
     imports: [TypeOrmModule.forFeature([User, Session, Vote, Poll])],
     providers: [VotingService, AuthService]
 })

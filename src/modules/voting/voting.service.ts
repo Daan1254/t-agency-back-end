@@ -48,6 +48,11 @@ export class VotingService {
             this.voteRepository.remove(vote)
         })
 
+        poll.comment = null
+
+        await this.pollRepository.save(poll);
+
+
         return await this.pollRepository.remove(poll);
     }
 

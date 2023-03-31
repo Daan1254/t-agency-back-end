@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards, UsePipes } from "@nestjs/common";
+import { Body, Controller, Param, Post, Req, UseGuards, UsePipes } from "@nestjs/common";
 import { ValidationPipe } from "@nestjs/common/pipes";
 import { ApiTags } from "@nestjs/swagger";
 import { AuthGuard, RequestWithAuth } from "../auth/auth.guard";
@@ -13,11 +13,11 @@ export class CommentController {
 
 
 
-  @Post()
+  @Post(':uuid')
   @UsePipes(ValidationPipe)
   @UseGuards(AuthGuard)
-  async createComment(@Body() body: CreateCommentDto, @Req() req: RequestWithAuth ) {
-    return await this.commentService.createComment(body, req.user)
+  async createComment(@Param('uuid') uuid: string, @Body() body: CreateCommentDto, @Req() req: RequestWithAuth ) {
+    return await this.commentService.createComment(body, uuid, req.user)
   } 
 
 }

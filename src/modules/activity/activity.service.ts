@@ -68,7 +68,7 @@ export class ActivityService {
       where: {
         uuid
       },
-      relations: ['comments', 'user']
+      relations: ['comments', 'user', 'comments.user', 'comments.poll', 'comments.poll.votes', 'comments.poll.votes.user']
     })
   }
 }

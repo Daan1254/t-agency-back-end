@@ -8,6 +8,7 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { ActivityModule } from "./modules/activity/activity.module";
 import { RequestModule } from './modules/request/request.module';
 import { VotingModule } from './modules/voting/voting.module';
+import { CommentModule } from './modules/comment/comment.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { VotingModule } from './modules/voting/voting.module';
     AuthModule,
     ActivityModule,
     RequestModule,
-    VotingModule
+    VotingModule,
+    CommentModule
   ],
   controllers: [AppController],
   providers: [AppService],
