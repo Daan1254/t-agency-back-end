@@ -1,13 +1,21 @@
-import { Body, Controller, Get, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { AuthService } from "./auth.service";
-import { LoginDto } from "./dto/login.dto";
-import { AuthGuard, RequestWithAuth } from "./auth.guard";
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
+import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
+import { AuthGuard, RequestWithAuth } from './auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {
-  }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('/')
   @UsePipes(ValidationPipe)

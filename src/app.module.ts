@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule, ConfigService } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import entities from "./typeorm";
-import { AuthModule } from "./modules/auth/auth.module";
-import { ActivityModule } from "./modules/activity/activity.module";
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import entities from './typeorm';
+import { AuthModule } from './modules/auth/auth.module';
+import { ActivityModule } from './modules/activity/activity.module';
 import { RequestModule } from './modules/request/request.module';
 import { VotingModule } from './modules/voting/voting.module';
 import { CommentModule } from './modules/comment/comment.module';
@@ -31,7 +31,7 @@ import { CommentModule } from './modules/comment/comment.module';
     ActivityModule,
     RequestModule,
     VotingModule,
-    CommentModule
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
